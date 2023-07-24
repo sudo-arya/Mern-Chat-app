@@ -50,7 +50,7 @@ const Signin = () => {
       );
 
       toast({
-        title: "Login Successful",
+        title: "SignIn Successful",
         status: "success",
         duration: 5000,
         isClosable: true,
