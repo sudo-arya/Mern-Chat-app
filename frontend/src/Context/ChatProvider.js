@@ -8,7 +8,7 @@ const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
   const [user, setUser] = useState();
   // const [,]=useState();
-
+  // changed app.js also
   // const history = useHistory();
   const history = [useHistory()];
 
