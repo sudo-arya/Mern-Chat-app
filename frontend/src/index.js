@@ -14,12 +14,12 @@ import ChatProvider from "../src/Context/ChatProvider";
 // );
 
 ReactDOM.render(
-  <ChatProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <ChatProvider>
       <ChakraProvider>
         <App />
       </ChakraProvider>
-    </BrowserRouter>
-  </ChatProvider>,
+    </ChatProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
