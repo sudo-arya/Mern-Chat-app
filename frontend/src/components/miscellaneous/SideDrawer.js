@@ -26,6 +26,9 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogics";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -33,7 +36,14 @@ const SideDrawer = () => {
   const [Loading, setLoading] = useState(false);
   const [LoadingChat, setLoadingChat] = useState();
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -145,12 +155,31 @@ const SideDrawer = () => {
 
         <div>
           <Menu>
-            <Tooltip label="Notifications" hasArrow placement="bottom-end">
-              <MenuButton p={1} fontSize="lg" m={1} variant="ghost">
-                <i class="fas fa-bell"></i>
-              </MenuButton>
-              {/* <MenuList></MenuList> */}
-            </Tooltip>
+            {/* <Tooltip label="Notifications" hasArrow placement="bottom-end"> */}
+            <MenuButton p={1} fontSize="lg" m={1} variant="ghost">
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
+              <i class="fas fa-bell"></i>
+            </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New message in ${notif.chat.chatName}`
+                    : `New message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
+            {/* </Tooltip> */}
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon variant="ghost">

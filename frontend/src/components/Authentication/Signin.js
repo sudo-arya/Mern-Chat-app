@@ -12,6 +12,7 @@ import { handle } from "express/lib/application";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
 
 const Signin = () => {
   const [email, setEmail] = useState();
@@ -21,6 +22,7 @@ const Signin = () => {
   const handleClick = () => setShow(!show);
   const toast = useToast();
   const history = useHistory();
+  // const { setUser } = ChatState();
 
   const submitHandler = async () => {
     setLoading(true);
@@ -56,6 +58,7 @@ const Signin = () => {
         isClosable: true,
         position: "bottom",
       });
+      // const { setUser } = ChatState();
 
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);

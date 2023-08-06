@@ -9,7 +9,10 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please enter all the fields");
   }
-  const userExists = await User.findOne({ email });
+  const userExists = await User.findOne(
+    { email }
+    // { includeResultMetadata: true }
+  );
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
@@ -39,7 +42,10 @@ const registerUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne(
+    { email }
+    // , { includeResultMetadata: true }
+  );
 
   if (user && (await user.matchPassword(password))) {
     res.json({

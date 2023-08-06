@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Chat = require("../Models/chatModel");
 const User = require("../Models/userModel");
+// const { chats } = require("../data/data");
 
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
@@ -13,7 +14,7 @@ const accessChat = asyncHandler(async (req, res) => {
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: req.user._id } } },
-      { users: { $elemMatch: { $eq: req.userId } } },
+      { users: { $elemMatch: { $eq: userId } } },
     ],
   })
     .populate("users", "-password")
@@ -36,12 +37,12 @@ const accessChat = asyncHandler(async (req, res) => {
     try {
       const createdChat = await Chat.create(chatData);
 
-      const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
-        "users",
-        "-password"
-      );
+      const FullChat = await Chat.findOne(
+        { _id: createdChat._id }
+        // { includeResultMetadata: true }
+      ).populate("users", "-password");
 
-      res.status(200).send(FullChat);
+      res.status(200).json(FullChat);
     } catch (error) {
       res.status(400);
       throw new Error(error.message);
@@ -54,7 +55,7 @@ const fetchChats = asyncHandler(async (req, res) => {
     Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
-      .populate("latestmessage")
+      .populate("latestMessage")
       .sort({ updatedAt: -1 })
       .then(async (results) => {
         results = await User.populate(results, {
@@ -92,7 +93,10 @@ const createGroupChat = asyncHandler(async (req, res) => {
       groupAdmin: req.user,
     });
 
-    const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+    const fullGroupChat = await Chat.findOne(
+      { _id: groupChat._id }
+      // { includeResultMetadata: true }
+    )
       .populate("users", "-password")
       .populate("groupAdmin", "-password");
     res.status(200).json(fullGroupChat);
@@ -108,11 +112,12 @@ const renameGroup = asyncHandler(async (req, res) => {
   const updatedChat = await Chat.findByIdAndUpdate(
     chatId,
     {
-      chatName,
+      chatName: chatName,
     },
     {
       new: true,
     }
+    // { includeResultMetadata: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
@@ -134,6 +139,7 @@ const addToGroup = asyncHandler(async (req, res) => {
       $push: { users: userId },
     },
     { new: true }
+    // { includeResultMetadata: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
@@ -155,6 +161,7 @@ const removeFromGroup = asyncHandler(async (req, res) => {
       $pull: { users: userId },
     },
     { new: true }
+    // { includeResultMetadata: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
