@@ -82,7 +82,7 @@ const GroupChatModal = ({ children }) => {
       };
 
       const { data } = await axios.post(
-        "/api/chat/group",
+        `/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
@@ -103,7 +103,7 @@ const GroupChatModal = ({ children }) => {
       toast({
         title: "Failed to Create a Group",
         description: error.response.data,
-        status: "success",
+        status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -134,7 +134,7 @@ const GroupChatModal = ({ children }) => {
   return (
     <>
       <span onClick={onOpen}>{children}</span>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
@@ -164,7 +164,7 @@ const GroupChatModal = ({ children }) => {
             <Box w="100%" display="flex" flexWrap="wrap">
               {selectedUsers.map((u) => (
                 <UserBadgeItem
-                  key={user._id}
+                  key={u._id}
                   user={u}
                   handleFunction={() => handleDelete(u)}
                 />

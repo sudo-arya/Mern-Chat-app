@@ -28,7 +28,7 @@ const ProfileModal = ({ user, children }) => {
           onClick={onOpen}
         />
       )}
-      <Modal size="lg" isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent h="410px">
           <ModalHeader

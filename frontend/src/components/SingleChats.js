@@ -25,7 +25,7 @@ var socket, selectedChatCompare;
 const SingleChats = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newMessage, setNewMessage] = useState();
+  const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -115,17 +115,17 @@ const SingleChats = ({ fetchAgain, setFetchAgain }) => {
       try {
         const config = {
           headers: {
-            "Content-Type": "application/json",
+            "Content-type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         };
 
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `/api/message`,
           {
             content: newMessage,
-            chatId: selectedChat._id, //id
+            chatId: selectedChat, //id
           },
           config
         );
@@ -234,7 +234,7 @@ const SingleChats = ({ fetchAgain, setFetchAgain }) => {
 
             <FormControl
               onKeyDown={sendMessage}
-              id="chat"
+              id="first-name"
               isRequired
               mt={3}
               // position="bottom"

@@ -34,7 +34,7 @@ const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [Loading, setLoading] = useState(false);
-  const [LoadingChat, setLoadingChat] = useState();
+  const [LoadingChat, setLoadingChat] = useState(false);
 
   const {
     user,
@@ -104,7 +104,7 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.post("/api/chat", { userId }, config);
+      const { data } = await axios.post(`/api/chat`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
 
@@ -136,7 +136,7 @@ const SideDrawer = () => {
       >
         <Tooltip label="Search users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
             <Text display={{ base: "none", md: "flex" }} px="4">
               Search User
             </Text>
@@ -161,7 +161,7 @@ const SideDrawer = () => {
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <i class="fas fa-bell"></i>
+              <i className="fas fa-bell"></i>
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -174,8 +174,8 @@ const SideDrawer = () => {
                   }}
                 >
                   {notif.chat.isGroupChat
-                    ? `New message in ${notif.chat.chatName}`
-                    : `New message from ${getSender(user, notif.chat.users)}`}
+                    ? `New Message in ${notif.chat.chatName}` //dw
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
             </MenuList>
@@ -193,7 +193,7 @@ const SideDrawer = () => {
             </MenuButton>
             <MenuList>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>
+                <MenuItem>My Profile</MenuItem>{" "}
               </ProfileModal>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>

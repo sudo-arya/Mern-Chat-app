@@ -13,7 +13,8 @@ import Signin from "../components/Authentication/Signin";
 import Signup from "../components/Authentication/Signup";
 import { useHistory } from "react-router-dom";
 
-const Homepage = () => {
+// const Homepage = () => {
+function Homepage() {
   const history = useHistory();
 
   useEffect(() => {
@@ -76,6 +77,6 @@ const Homepage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default Homepage;

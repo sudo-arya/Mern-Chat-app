@@ -6,12 +6,12 @@ import Chatpage from "./Pages/Chatpage";
 function App() {
   return (
     <div className="App">
-      <Router>
-        {/* <Routes> */}
-        <Route path="/" component={Homepage} exact />
-        <Route path="/chats" component={Chatpage} />
-        {/* </Routes> */}
-      </Router>
+      {/* <Router> */}
+      {/* <Routes> */}
+      <Route path="/" component={Homepage} exact />
+      <Route path="/chats" component={Chatpage} />
+      {/* </Routes> */}
+      {/* </Router> */}
     </div>
   );
 }
