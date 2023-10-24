@@ -32,7 +32,7 @@ steps:
     azureSubscription: 'Free Trial(21005496-a0fd-4e24-87b7-01a648e9fdd5)'
     appType: 'webApp'
     WebAppName: 'mern-chat-app-dg'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/'
     ScriptType: 'Inline Script'
     InlineScript: |
       :: node ./backend/server.js
