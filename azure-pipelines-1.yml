@@ -19,6 +19,9 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+- script: |
+    ls $(Build.ArtifactStagingDirectory)
+  displayName: 'List Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
